@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   ilovemarketing_news
+ * @package    system.xml - conf file
+ * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
+ * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    0.0.1
+ *
+-->
+
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">  
+    <system>
+            
+        <tab id="ilovemarketing" translate="label" sortOrder="1000" class="Ilovemarketing_News">
+            <label>I love Marketing</label>
+        </tab>
+        
+        <section id="ilovemarketing" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">      
+            
+            <label>Noticias</label>      
+            <tab>ilovemarketing</tab>      
+            <resource>Ilovemarketing_News::config_news</resource>      
+            
+            <group id="news" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">                            
+                
+                <label>Módulo de Noticias</label>   
+                <comment>Configuración del Módulo de Noticias</comment>                     
+                
+                <!-- Campo para habilitar el modulo -->
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Habilitar Módulo</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                
+                <!-- Campo texto title -->
+                <field id="newsTitle" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">          
+                    <label>Título</label>        
+                </field>        
+                
+                <!-- Campo texto control registros -->
+                <field id="newsLimit" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">          
+                    <label>Registros por página</label>     
+                    <source_model>Ilovemarketing\News\Model\Config\Source\NewsLimit</source_model>   
+                </field>                       
+                
+                <!-- campo select personalizado -->
+                <field id="newsFeatured" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Noticias a destacar</label>
+                    <source_model>Ilovemarketing\News\Model\Config\Source\NewsFeatured</source_model>
+                </field>    
+                
+                <!-- campo que dependera de newsFeatured -->
+                <field id="newsFeaturedDependable" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cantidad de noticias a destacar</label>
+                    <depends>
+                        <field id="*/*/newsFeatured">2</field>
+                    </depends>
+                    <source_model>Ilovemarketing\News\Model\Config\Source\NewsFeaturedLimit</source_model>
+                </field>  
+                
+                <!-- campo para un grupo de opciones -->
+                <field id="newsTypes" translate="label" type="multiselect" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Tipo de noticias que se mostrarán</label>
+                    <source_model>Ilovemarketing\News\Model\Config\Source\NewsTypes</source_model>
+                </field>     
+                
+               <!-- campo para un grupo de opciones -->
+                <field id="newsVisible" translate="label" type="multiselect" sortOrder="6" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Visibilidad</label>
+                    <source_model>Ilovemarketing\News\Model\Config\Source\NewsVisible</source_model>
+                </field>                     
+                
+            </group>    
+
+            <group id="newsMeta" translate="label" type="text" sortOrder="2"  showInDefault="1" showInWebsite="1" showInStore="1">                         
+                <label>Meta Tags</label>           
+                
+                <!-- Campo texto meta title -->
+                <field id="newsMetaTitle" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">          
+                    <label>Meta Titulo</label>        
+                </field>                       
+                
+                <!-- Campo texto meta description -->
+                <field id="newsMetaDescription" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">          
+                    <label>Meta Descripción</label>        
+                </field>             
+                
+                <!-- Campo texto meta keywords -->
+                <field id="newsMetaKeywords" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">          
+                    <label>Meta Keywords</label>        
+                </field>                     
+                                
+            </group>            
+            
+            
+        </section>  
+        
+    </system> 
+    
+</config>

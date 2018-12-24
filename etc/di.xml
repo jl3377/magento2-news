@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="NewsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Ilovemarketing\News\Model\ResourceModel\News\News</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">NewsGridFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="NewsGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="news_news_listing_data_source" xsi:type="string">Ilovemarketing\News\Model\ResourceModel\News\News</item> 
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Ilovemarketing\News\Model\ResourceModel\News\News" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">ilovemarketing_news</argument>
+            <argument name="resourceModel" xsi:type="string">Ilovemarketing\News\Model\ResourceModel\News</argument>
+        </arguments>
+    </virtualType>
+
+
+    <!-- dependencias del cargador de imagenes -->
+    <virtualType name="Ilovemarketing\News\NewsImageUploader" type="Ilovemarketing\News\Model\News\ImageUploader">
+        <arguments>
+                <argument name="baseTmpPath" xsi:type="string">ilm/tmp</argument>
+                <argument name="basePath" xsi:type="string">ilm/news</argument>
+                <argument name="allowedExtensions" xsi:type="array">
+                    <item name="jpg" xsi:type="string">jpg</item>
+                    <item name="jpeg" xsi:type="string">jpeg</item>
+                    <item name="gif" xsi:type="string">gif</item>
+                    <item name="png" xsi:type="string">png</item>
+                </argument>
+        </arguments>
+    </virtualType>
+    <type name="Ilovemarketing\News\Controller\Adminhtml\News\Upload">
+        <arguments>
+            <argument name="imageUploader" xsi:type="object">Ilovemarketing\News\NewsImageUploader</argument>
+        </arguments>
+    </type>
+
+</config>
