@@ -1,5 +1,5 @@
 # News
-News for Magento 2
+News for Magento 2.1
 
 Module for add news
 
