@@ -1,5 +1,5 @@
 # News for Magento 2.1
-# Module for add news
+Module for add news
 
 Requirements
  - [Magento] Community 2.1+
