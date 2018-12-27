@@ -41,16 +41,19 @@ class Save extends Action {
         $this->_storeManager = $storeManager;         
         parent::__construct($context);
     }
-
+    
     public function execute() {
         
         // Recibe los datos enviados por post
         $data = $this->getRequest()->getPostValue();
         $resultRedirect = $this->resultRedirectFactory->create();
         
+        $this->_data = $data;
+        
         // Comprobamos que se reciben datos
         if ($data) {       
             $id = $this->getRequest()->getParam('id');
+            
             
             // Caso que tenga imagen la noticia
             if (isset($data['news']['news_image'][0]['name']) && isset($data['news']['news_image'][0]['tmp_name'])) {
@@ -79,7 +82,10 @@ class Save extends Action {
             } 
              
             $model = $this->_objectManager->create('Ilovemarketing\News\Model\News')->load($id);
-            $model->setData($data['news']);
+            //$model->setData($data['news']);            
+            $model->setData($this->_data);            
+            
+            
             try {
                 
                 // guardamos datos            
