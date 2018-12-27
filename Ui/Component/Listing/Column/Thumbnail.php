@@ -28,19 +28,24 @@ use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\UrlInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class Thumbnail extends Column {
+    
+    protected $_jsonHelper;
     
     public function __construct(
         ContextInterface $context,            
         UiComponentFactory $uiComponentFactory,
         UrlInterface $urlBuilder,        
+        Json $jsonHelper,
         array $components = [],
         array $data = []
     ) {
         parent::__construct($context, $uiComponentFactory, $components, $data);
         
-        $this->_urlBuilder = $urlBuilder;        
+        $this->_urlBuilder = $urlBuilder;  
+        $this->_jsonHelper = $jsonHelper;
     }
 
     public function prepareDataSource(array $dataSource) {
@@ -54,17 +59,23 @@ class Thumbnail extends Column {
             foreach ($dataSource['data']['items'] as & $item) {         
                 
                 // deserializamos el campo imagen
-                $imageArray = unserialize($item["news_image"]);
+                //$imageArray = unserialize($item["news_image"]);
+                if ($item["news_image"]) {
+                    $imageArray = $this->_jsonHelper->unserialize($item["news_image"]);
+                } else {  $imageArray = null; }
                 
-                // Completamos las variables del template de la imagen
-                // attr: {src: $col.getSrc($row()), alt: $col.getAlt($row())}
-                $item[$fieldName . '_src'] = $imageArray[0]['url']; 
-                $item[$fieldName . '_orig_src'] = $imageArray[0]['url']; 
-                $item[$fieldName . '_alt'] = $imageArray['0']['name'];
-                $item[$fieldName . '_link'] = $this->_urlBuilder->getUrl(
-                    'news/news/edit', // controlador edicion 
-                    ['id' => $item['news_id']] // parametros 
-                );
+                if (!empty($imageArray)) {
+                                 
+                    // Completamos las variables del template de la imagen
+                    // attr: {src: $col.getSrc($row()), alt: $col.getAlt($row())}
+                    $item[$fieldName . '_src'] = $imageArray[0]['url']; 
+                    $item[$fieldName . '_orig_src'] = $imageArray[0]['url']; 
+                    $item[$fieldName . '_alt'] = $imageArray['0']['name'];
+                    $item[$fieldName . '_link'] = $this->_urlBuilder->getUrl(
+                        'news/news/edit', // controlador edicion 
+                        ['id' => $item['news_id']] // parametros 
+                    );
+                }
             }
         }
 

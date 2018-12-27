@@ -26,18 +26,24 @@ namespace Ilovemarketing\News\Model\News;
 
 use Ilovemarketing\News\Model\ResourceModel\News\NewsFactory;
 use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magento\Framework\Serialize\Serializer\Json;
 
 class DataProvider extends AbstractDataProvider {
    
+    protected $_jsonHelper;
+    
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
         NewsFactory $newsFactory,
+        Json $jsonHelper,
         array $meta = [],
         array $data = [] ) {
         
         $this->collection = $newsFactory->create();
+        $this->_jsonHelper = $jsonHelper;
+        
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
 
@@ -58,7 +64,9 @@ class DataProvider extends AbstractDataProvider {
             
             $news_image = $this->loadedData[$news->getId()]['news']['news_image'];
             if (!empty($news_image)) {
-            $this->loadedData[$news->getId()]['news']['news_image'] = @unserialize($news_image);    }
+            //$this->loadedData[$news->getId()]['news']['news_image'] = @unserialize($news_image);    
+            $this->loadedData[$news->getId()]['news']['news_image'] = $this->_jsonHelper->unserialize($news_image);    
+            }
         } 
                 
         return $this->loadedData;

@@ -25,15 +25,17 @@
 namespace Ilovemarketing\News\Controller\Adminhtml\News;
 
 use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
 use Ilovemarketing\News\Model\News; 
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Exception\LocalizedException;
 
 class Save extends Action {    
       
     protected $imageUploader;
 
     public function __construct(
-        Action\Context $context,
+        Context $context,
         StoreManagerInterface $storeManager ) {
         
         $this->_storeManager = $storeManager;         
@@ -47,48 +49,56 @@ class Save extends Action {
         $resultRedirect = $this->resultRedirectFactory->create();
         
         // Comprobamos que se reciben datos
-        if ($data) {            
+        if ($data) {       
+            $id = $this->getRequest()->getParam('id');
             
             // Caso que tenga imagen la noticia
             if (isset($data['news']['news_image'][0]['name']) && isset($data['news']['news_image'][0]['tmp_name'])) {
-                $data['image'] = $data['news']['news_image'][0]['name']; // nombre de la imagen
+                $data['image'] = $data['news']['news_image'][0]['name']; // nombre de la imagen    
                 // dependencia para cargar imagenes
-                $this->imageUploader = \Magento\Framework\App\ObjectManager::getInstance()->get('Ilovemarketing\News\NewsImageUploader');
+                $this->_imageUploader = \Magento\Framework\App\ObjectManager::getInstance()->get('Ilovemarketing\News\NewsImageUploader');
             } else { $data['image'] = null; }
             
                
             // Sino la imagen es enviada
-            if (!empty($data['image'])) {
+            if (!empty($data['news']['news_image'])) {
                     
                 // Recuperamos el path donde se gaurdan las imágenes
-                $basePath = $this->imageUploader->getBasePath();   
+                $basePath = $this->_imageUploader->getBasePath();                   
+                
                 // Recuperamos el path completo de la imagen
-                $baseImagePath = $this->imageUploader->getFilePath($basePath, $data['image']);    
+                $baseImagePath = $this->_imageUploader->getFilePath($basePath, $data['image']);    
                 $mediaUrl = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);                    
                     
                 if ($data['news']['news_image'][0]['url'] != $mediaUrl.$baseImagePath) {                        
                     // asignamos la url definitiva a la imagen                    
-                    $data['news']['news_image'][0]['url'] = $mediaUrl.$baseImagePath;                                 
-                    // movemos la imagen
-                    $this->imageUploader->moveFileFromTmp($data['image']);
+                    $data['news']['news_image'][0]['url'] = $mediaUrl.$baseImagePath;         
+                     // move image
+                    $this->_imageUploader->moveFileFromTmp($data['image']);
                 }    
             } 
+             
+            $model = $this->_objectManager->create('Ilovemarketing\News\Model\News')->load($id);
+            $model->setData($data['news']);
+            try {
+                
+                // guardamos datos            
+                $model->save();      
+                
+                // message
+                $this->messageManager->addSuccess(__('News saved correctly'));
+
+                // save and continue buttom
+                if ($this->getRequest()->getParam('back')) {
+                    return $resultRedirect->setPath('*/*/edit', [
+                        'id' => $model->getId(),
+                        '_current' => true
+                    ]);
+                }  
             
-            // guardamos datos            
-            $_news = $this->_objectManager->create(News::class);            
-            $_news->setData($data['news']);            
-            $_news->save(); 
-            
-            // message
-            $this->messageManager->addSuccess(__('News saved correctly'));
-            
-            // save and continue buttom
-            if ($this->getRequest()->getParam('back')) {
-                return $resultRedirect->setPath('*/*/edit', [
-                    'id' => $_news->getId(),
-                    '_current' => true
-                ]);
-            }            
+            } catch (LocalizedException $e) {
+                $this->messageManager->addError($e->getMessage());
+            }
                 
         }
         
