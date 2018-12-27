@@ -1,5 +1,4 @@
-# News
-News for Magento 2.1
+# News module for Magento 2.1
 
 Module for add news
 
