@@ -48,8 +48,6 @@ class Save extends Action {
         $data = $this->getRequest()->getPostValue();
         $resultRedirect = $this->resultRedirectFactory->create();
         
-        $this->_data = $data;
-        
         // Comprobamos que se reciben datos
         if ($data) {       
             $id = $this->getRequest()->getParam('id');
@@ -80,18 +78,21 @@ class Save extends Action {
                     $this->_imageUploader->moveFileFromTmp($data['image']);
                 }    
             } 
-             
-            $model = $this->_objectManager->create('Ilovemarketing\News\Model\News')->load($id);
-            //$model->setData($data['news']);            
-            $model->setData($this->_data);            
             
+            // our model database
+            $model = $this->_objectManager->create('Ilovemarketing\News\Model\News');
+            // if $data["news] is defined and not null
+            if (isset($data["news"])) {
+                $model->setData($data["news"]);                        
+            }    
             
+            // ready to save
             try {
                 
                 // guardamos datos            
                 $model->save();      
                 
-                // message
+                // add message
                 $this->messageManager->addSuccess(__('News saved correctly'));
 
                 // save and continue buttom
@@ -102,6 +103,7 @@ class Save extends Action {
                     ]);
                 }  
             
+            // errors
             } catch (LocalizedException $e) {
                 $this->messageManager->addError($e->getMessage());
             }
