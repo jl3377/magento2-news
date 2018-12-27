@@ -13,7 +13,7 @@
  * version in the future.
  * 
  * @category   ilovemarketing_news
- * @package    news_news_listing.xml - ui component - backend
+ * @package    ilm_news_listing.xml - ui component - backend
  * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
  * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -32,12 +32,12 @@
         
         <!-- definimos donde se encontrará el data source -->
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">news_news_listing.news_news_listing_data_source</item>
-            <item name="deps" xsi:type="string">news_news_listing.news_news_listing_data_source</item>
+            <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
+            <item name="deps" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
         </item>
         
         <!-- definimos donde encontrar las columnas -->
-        <item name="spinner" xsi:type="string">news_news_columns</item>
+        <item name="spinner" xsi:type="string">ilm_news_columns</item>
         
         <!-- definimos los botones -->
         <item name="buttons" xsi:type="array">
@@ -54,12 +54,12 @@
     <!-- configuracion del DataSource 
     Es un componente UI que nos proporciona las datos en un formato especifico
     Listing necesita el DataSource correctamente configurado para funcionar  -->
-    <dataSource name="news_news_data_source">
+    <dataSource name="ilm_news_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <!-- unique name for the grid -->
             <argument name="class" xsi:type="string">NewsGridDataProvider</argument>
             <!-- name of the data source same as in argument/js_config/provider -->
-            <argument name="name" xsi:type="string">news_news_listing_data_source</argument>
+            <argument name="name" xsi:type="string">ilm_news_listing_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">news_id</argument>
             <argument name="requestFieldName" xsi:type="string">news_id</argument>
             <argument name="data" xsi:type="array">
@@ -80,7 +80,7 @@
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="columnsData" xsi:type="array">
-                    <item name="provider" xsi:type="string">news_news_listing.news_news_listing.news_news_columns</item>
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns</item>
                 </item>
                 <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
                     <item name="displayArea" xsi:type="string">dataGridActions</item>
@@ -106,10 +106,10 @@
         <filterSearch name="fulltext">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="provider" xsi:type="string">news_news_listing.news_news_listing_data_source</item>
-                    <item name="chipsProvider" xsi:type="string">news_news_listing.news_news_listing.listing_top.listing_filters_chips</item>
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
+                    <item name="chipsProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.listing_filters_chips</item>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">news_news_listing.news_news_listing.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.search</item>
                     </item>
                 </item>
@@ -127,7 +127,7 @@
                     <item name="storageConfig" xsi:type="array">
                         <item name="saveUrl" xsi:type="url" path="*/*/save"/>
                         <item name="deleteUrl" xsi:type="url" path="*/*/delete"/>
-                        <item name="namespace" xsi:type="string">news_news_listing</item>
+                        <item name="namespace" xsi:type="string">ilm_news_listing</item>
                     </item>
                 </item>
             </argument>
@@ -141,13 +141,13 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">news_news_listing.news_news_listing.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
                         <item name="namespace" xsi:type="string">current.filters</item>
                     </item>
                     <item name="childDefaults" xsi:type="array">
-                        <item name="provider" xsi:type="string">news_news_listing.news_news_listing.listing_top.listing_filters</item>
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.listing_filters</item>
                         <item name="imports" xsi:type="array">
-                            <item name="visible" xsi:type="string">news_news_listing.news_news_listing.listing_top.bookmarks:current.columns.${ $.index }.visible</item>
+                            <item name="visible" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks:current.columns.${ $.index }.visible</item>
                         </item>
                     </item>
                 </item>
@@ -157,7 +157,7 @@
         <massaction name="listing_massaction">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">                    
-                    <item name="selectProvider" xsi:type="string">news_news_listing.news_news_listing.news_news_columns.ids</item>
+                    <item name="selectProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns.ids</item>
                     <item name="displayArea" xsi:type="string">bottom</item>
                     <item name="indexField" xsi:type="string">news_id</item>
                 </item>
@@ -181,7 +181,7 @@
                         <item name="type" xsi:type="string">edit</item>
                         <item name="label" xsi:type="string" translate="true">Edit</item>
                         <item name="callback" xsi:type="array">
-                            <item name="provider" xsi:type="string">news_news_listing.news_news_listing.news_news_columns_editor</item>
+                            <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns_editor</item>
                             <item name="target" xsi:type="string">editSelected</item>
                         </item>
                     </item>
@@ -194,14 +194,14 @@
     <!-- definimos la grilla 
     definir el numero de columnas de la grilla 
     el nombre de las columnas lo definimos anteriormente en el spinner -->
-    <columns name="news_news_columns">
+    <columns name="ilm_news_columns">
         
         <!-- inline edit -->
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <!-- controlador que se encargara del guardado de los datos en linea -->
                 <item name="editorConfig" xsi:type="array">
-                    <item name="selectProvider" xsi:type="string">news_news_listing.news_news_listing.news_news_columns.ids</item>
+                    <item name="selectProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns.ids</item>
                     <item name="enabled" xsi:type="boolean">true</item>
                     <item name="indexField" xsi:type="string">news_id</item>
                     <item name="clientConfig" xsi:type="array">
@@ -213,7 +213,7 @@
                 <item name="childDefaults" xsi:type="array">
                     <!-- fieldaction nos permite hacer el elemento editable -->
                     <item name="fieldAction" xsi:type="array">
-                        <item name="provider" xsi:type="string">news_news_listing.news_news_listing.news_news_columns_editor</item>
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns_editor</item>
                         <item name="target" xsi:type="string">startEdit</item>
                         <item name="params" xsi:type="array">
                             <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
@@ -227,13 +227,13 @@
         <!--<argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">               
                 <item name="storageConfig" xsi:type="array">
-                    <item name="provider" xsi:type="string">news_news_listing.news_news_listing.listing_top.bookmarks</item>
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
                     <item name="namespace" xsi:type="string">current</item>
                 </item>
                 <item name="childDefaults" xsi:type="array">
                     <item name="controlVisibility" xsi:type="boolean">true</item>
                     <item name="storageConfig" xsi:type="array">
-                        <item name="provider" xsi:type="string">news_news_listing.news_news_listing.listing_top.bookmarks</item>
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
                         <item name="root" xsi:type="string">columns.${ $.index }</item>
                         <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
                     </item>

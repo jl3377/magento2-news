@@ -29,12 +29,12 @@
     <update handle="styles"/>
     <update handle="editor"/>
     
-    <update handle="news_news_edit"/>
+    <update handle="ilm_news_edit"/>
     <body/>
     
   <!--<body>
         <referenceContainer name="content">
-            <uiComponent name="news_news_form"/>
+            <uiComponent name="ilm_news_form"/>
         </referenceContainer>
     </body>-->
     
