@@ -72,7 +72,7 @@ class Thumbnail extends Column {
                     $item[$fieldName . '_orig_src'] = $imageArray[0]['url']; 
                     $item[$fieldName . '_alt'] = $imageArray['0']['name'];
                     $item[$fieldName . '_link'] = $this->_urlBuilder->getUrl(
-                        'news/news/edit', // controlador edicion 
+                        'ilm/news/edit', // controlador edicion 
                         ['id' => $item['news_id']] // parametros 
                     );
                 }

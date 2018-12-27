@@ -14,7 +14,7 @@
  * version in the future.
  * 
  * @category   ilovemarkeing_news
- * @package    TestActions.php - ui component - news_news_listing - actionColum
+ * @package    TestActions.php - ui component - ilm_news_listing - actionColum
  * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
  * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
@@ -63,7 +63,7 @@ class NewsActions extends Column {
 
                     $item[$this->getData('name')]['edit'] = [
                         'href' => $this->_urlBuilder->getUrl(
-                            'news/news/edit',
+                            'ilm/news/edit',
                             ['id' => $item['news_id']]
                         ),
                         'label' => __('Editar'),
@@ -71,7 +71,7 @@ class NewsActions extends Column {
                     ];
                     $item[$this->getData('name')]['delete'] = [
                         'href' => $this->_urlBuilder->getUrl(
-                            'news/news/delete',
+                            'ilm/news/delete',
                             ['id' => $item['news_id']]
                         ),
                         'label' => __('Borrar'),
@@ -83,7 +83,7 @@ class NewsActions extends Column {
                     ];
                     /*$item[$this->getData('name')]['preview'] = [
                         'href' => $this->_urlBuilder->getUrl(
-                            'news/news/preview',
+                            'ilm/news/preview',
                             ['id' => $item['news_id']]
                         ),
                         'label' => __('Preview'),

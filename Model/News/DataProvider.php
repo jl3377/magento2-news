@@ -14,7 +14,7 @@
  * version in the future.
  * 
  * @category   ilovemarketing_news
- * @package    DataProvider - dataSource - news_news_lsiting
+ * @package    DataProvider - dataSource - ilm_news_lsiting
  * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
  * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)

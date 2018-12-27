@@ -23,7 +23,7 @@
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">   
 
-    <!--update handle="news_news" />-->
+    <!--update handle="ilm_news" />-->
     <body>
         <referenceContainer name="content">
             <block class="Ilovemarketing\News\Block\NewsView" name="NewsView" template="Ilovemarketing_News::newsView.phtml" />             
