@@ -1,4 +1,4 @@
-# News for Magento 2.1
+# News for Magento 2.3
 Module for add news
 
 Requirements
