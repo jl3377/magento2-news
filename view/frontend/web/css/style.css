@@ -1,6 +1,4 @@
-<?php
-
-/* 
+/*
  *
  * NOTICE OF LICENSE
  *
@@ -13,28 +11,17 @@
  * Do not edit or add to this file if you wish to upgrade this extension to newer
  * version in the future.
  * 
- * @category   Ilovemarketing_News
- * @package    newsList.phtml
+ * @category   artegrafico.net
+ * @package    artegrafico.net
  * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
  * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @version    0.0.1
  *
- */ 
+*/
+/* 
+    Created on : 28-dic-2018, 11:21:30
+    Author     : José Luis Rojo Sánchez <jose@artegrafico.net>
+*/
 
-if ($block->getPagerHtml()) { ?>
-   <div class="toolbar top"><?php echo $block->getPagerHtml(); ?></div><?php
-} 
-
-?><div id="ilm-news"><?php
-if (!empty($block->getNews())) { ?><ul><?php
-    foreach($block->getNews() as $item) { ?>
-        <li>            
-            <a href="index/view/id/<?php echo $item["news_id"]; ?>"><?php echo $item["news_title"]; ?></a>
-            <p><?php echo $item["news_content"]; ?></p>
-        </li>
-    <?php    
-    } ?></ul><?php
-}   
-
-?></div>
+#ilm-news { color:#000000; }

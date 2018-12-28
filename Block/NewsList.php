@@ -43,12 +43,7 @@ class NewsList extends Template {
         $this->_urlInterface = $urlInterface;
         // podemos usar ahora sus metodos getBaseUrl(), getUrl(), getCurrentUrl(), getUrl('test/test2') etc ..
          
-        parent::__construct($context);          
-        
-        // get the title, description and keywords from conf
-        $this->pageConfig->getTitle()->set(__($this->getConfig('ilovemarketing/news/newsTitle'))); 
-        $this->pageConfig->setDescription($this->getConfig('ilovemarketing/newsMeta/newsMetaDescription')); 
-        $this->pageConfig->setKeywords($this->getConfig('ilovemarketing/newsMeta/newsMetaKeywords'));         
+        parent::__construct($context);    
         
     }
 
@@ -88,6 +83,7 @@ class NewsList extends Template {
         $news = $this->_newsFactory->create();    
         $news->addFieldToFilter('news_visible',1)
              //->addFieldToFilter('store_id', array( 'in' => $this->getStoreId()))
+             ->addFieldToFilter('store_id', $this->getStoreId())   
              ->setOrder('news_date','desc')
              ->setPageSize($pageSize)
              ->setCurPage($page);
@@ -102,7 +98,10 @@ class NewsList extends Template {
      */
     protected function _prepareLayout() {
         
-        parent::_prepareLayout();
+        // get the title, description and keywords from conf
+        $this->pageConfig->getTitle()->set(__($this->getConfig('ilovemarketing/news/newsTitle'))); 
+        $this->pageConfig->setDescription($this->getConfig('ilovemarketing/newsMeta/newsMetaDescription')); 
+        $this->pageConfig->setKeywords($this->getConfig('ilovemarketing/newsMeta/newsMetaKeywords'));    
 
         if ($this->getNews()) {
             
@@ -124,6 +123,8 @@ class NewsList extends Template {
             $this->setChild('pager', $pager);            
             
         }
+        
+        parent::_prepareLayout();
         
     }
     
