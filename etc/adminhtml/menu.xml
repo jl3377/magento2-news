@@ -23,11 +23,58 @@
 
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="Ilovemarketing_News::ilm" title="Ilovemarketing" module="Ilovemarketing_News" sortOrder="250" resource="Ilovemarketing_News::ilm" />
-        <add id="Ilovemarketing_News::newsGroup" title="Mi modulo de noticias" module="Ilovemarketing_News" sortOrder="1" parent="Ilovemarketing_News::ilm" resource="Ilovemarketting_News::newsGroup" />
-        <add id="Ilovemarketing_News::newsAdd" title="Crear noticia" module="Ilovemarketing_News" sortOrder="2" parent="Ilovemarketing_News::newsGroup" resource="Ilovemarketing_News::newsAdd" action="ilm/news/add" />
-        <add id="Ilovemarketing_News::newsList" title="Listado de Noticias" module="Ilovemarketing_News" sortOrder="3" parent="Ilovemarketing_News::newsGroup" resource="Illovemarketing_News::newsList" action="ilm/news/index" />  
+    <menu>        
+        <add id="Ilovemarketing_News::content_news" 
+             title="News" 
+             translate="title" 
+             module="Magento_Backend"              
+             sortOrder="100" 
+             parent="Magento_Backend::content" 
+             resource="Ilovemarketing_News::content_news" />
+        <add id="Ilovemarketing_News::content_news_add" 
+             title="Add New" 
+             translate="title" 
+             module="Ilovemarketing_News"              
+             sortOrder="2" 
+             parent="Ilovemarketing_News::content_news" 
+             resource="Ilovemarketing_News::content_news_add" 
+             action="ilm/news/add" />
+        <add id="Illovemarketing_News::content_news_list" 
+             title="List News" 
+             translate="title" 
+             module="Ilovemarketing_News"              
+             sortOrder="3" 
+             parent="Ilovemarketing_News::content_news" 
+             resource="Illovemarketing_News::content_news_list" 
+             action="ilm/news/index" />  
+        
+        <!-- add menu with new icon -->
+        <!--<add 
+            id="Ilovemarketing_News::ilm" 
+            title="Ilovemarketing" 
+            module="Ilovemarketing_News" 
+            sortOrder="250" 
+            resource="Ilovemarketing_News::ilm" />
+        <add id="Ilovemarketing_News::newsGroup" 
+             title="Mi modulo de noticias" 
+             module="Ilovemarketing_News" 
+             sortOrder="1" 
+             parent="Ilovemarketing_News::ilm" 
+             resource="Ilovemarketting_News::newsGroup" />
+        <add id="Ilovemarketing_News::newsAdd" 
+             title="Crear noticia" 
+             module="Ilovemarketing_News" 
+             sortOrder="2" 
+             parent="Ilovemarketing_News::newsGroup" 
+             resource="Ilovemarketing_News::newsAdd" 
+             action="ilm/news/add" />
+        <add id="Ilovemarketing_News::newsList" 
+             title="Listado de Noticias" 
+             module="Ilovemarketing_News" 
+             sortOrder="3" 
+             parent="Ilovemarketing_News::newsGroup" 
+             resource="Illovemarketing_News::newsList" 
+             action="ilm/news/index" />      -->     
     </menu>
 </config>    
         

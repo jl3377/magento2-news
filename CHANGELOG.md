@@ -1,3 +1,7 @@
+1.2
+------
+added news menu to content menu
+
 1.0
 ------
 updated module for Magento 2.3
