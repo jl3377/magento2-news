@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   ilovemarketing_news
+ * @package    ilm_news_form
+ * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
+ * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    0.0.1
+ *
+-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ilm_news_form.ilm_news_form_data_source</item>
+            <item name="deps" xsi:type="string">ilm_news_form.ilm_news_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Form</item>
+        <item name="layout" xsi:type="array">
+            <item name="type" xsi:type="string">tabs</item>
+        </item>
+        
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\DeleteButton</item>            
+            <item name="reset" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\ResetButton</item>
+            <item name="save" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\SaveButton</item>
+            <item name="preview" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\PreviewButton</item>
+            <item name="save_and_continue" xsi:type="string">Ilovemarketing\News\Block\Adminhtml\News\Edit\SaveAndContinueButton</item>
+        </item>
+    </argument>
+
+    <dataSource name="ilm_news_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Ilovemarketing\News\Model\News\DataProvider</argument>
+            <argument name="name" xsi:type="string">ilm_news_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">news_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="ilm/news/save"/>
+                </item>
+            </argument>                     
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="news">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Noticia</item>
+            </item>
+        </argument>
+
+        <!-- This field represents form id and is hidden -->
+        <field name="news_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">news</item>
+                </item>
+            </argument>
+        </field>
+
+
+        <field name="news_visible">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="source" xsi:type="string">news</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="label" xsi:type="string" translate="true">Visible</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="string">1</item>
+                        <item name="false" xsi:type="string">0</item>
+                    </item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </field>
+
+        <!-- store id from news -->
+        <field name="store_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Cms\Ui\Component\Listing\Column\Cms\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">news</item>
+                    <item name="dataScope" xsi:type="string">store_id</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    
+    <field name="news_type_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Ilovemarketing\News\Model\News\Source\NewsTypes</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">tipo</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <!--<item name="notice" xsi:type="string" translate="true">Some note here</item>-->
+                    <!-- textarea, wysiwyg multiline, select, multiselect, ,radio, checkbox, ,password,time,note,label,link,image,file,date,submit -->
+                    <item name="formElement" xsi:type="string">select</item> 
+                    <item name="source" xsi:type="string">news</item>                     
+                </item>
+            </argument>           
+        </field>        
+
+        <field name="news_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Title</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">news</item>                     
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="news_content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">content</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="rows" xsi:type="number">12</item>
+                    <!-- textarea, wysiwyg multiline, select, multiselect, ,radio, checkbox, ,password,time,note,label,link,image,file,date,submit -->
+                    <item name="formElement" xsi:type="string">textarea</item> 
+                    <item name="source" xsi:type="string">news</item>
+                </item>
+            </argument>
+        </field>
+        
+        <!--<field name="news_image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">news</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="notice" xsi:type="string" translate="true">Allowed file types: ico, png, gif, jpg, jpeg, apng, svg. Not all browsers support all these formats!</item>
+                    <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
+                    <item name="maxFileSize" xsi:type="number">2097152</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="ilm/news/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>      -->
+    
+        
+        <field name="news_image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">news</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>     
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg!</item>                    
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="ilm/news/upload" />
+                    </item>
+                </item>
+            </argument>
+        </field>    
+                 
+        
+  
+        
+    </fieldset>
+</form>

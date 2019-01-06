@@ -1,0 +1,41 @@
+<?php
+
+/* 
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Ilovemarketing_News
+ * @package    newsList.phtml
+ * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
+ * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    0.0.1
+ *
+ */ 
+
+if ($block->getPagerHtml()) { ?>
+   <div class="toolbar top" style="margin:10px 0px 25px"><?php echo $block->getPagerHtml(); ?></div><?php
+} 
+
+if (!empty($block->getNews())) { ?><ul><?php
+?><div id="ilm-news"><?php
+    ?><div class="row"><?php
+    foreach($block->getNews() as $item) { ?>
+        <div class="col-12 col-md-4">
+            <h2><a href="index/view/id/<?php echo $item["news_id"]; ?>"><?php echo $item["news_title"]; ?></a></h2>
+            <img src="<?php  echo $block->unserializeImg($item["news_image"]); ?>" alt="<?php echo $item["news_title"]; ?>" style="width:100px;float:left;margin:10px 20px" />    
+            <p><?php echo $item["news_content"]; ?></p>
+        </div>
+    <?php    
+    } ?></div><?php
+?></div><?php
+}   

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   ilovemarketing_news
+ * @package    ilm_news_listing.xml - ui component - backend
+ * @author     José Luis Rojo Sánchez <jose@artegrafico.net>
+ * @copyright  Copyright (c) artegrafico.net (https://www.artegrafico.net/)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @version    0.0.1
+ *
+-->
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <!-- argument 
+    data_source -> declaramos los data_sources en uso que conectan los links de tu grid con la base de datos usando js_config.    
+    spinner -> es el nombre de las etiquetas de las columnas y que usara nuestro grid.
+    buttons -> botones de nuestra grilla
+    -->
+    <argument name="data" xsi:type="array">
+        
+        <!-- definimos donde se encontrará el data source -->
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
+            <item name="deps" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
+        </item>
+        
+        <!-- definimos donde encontrar las columnas -->
+        <item name="spinner" xsi:type="string">ilm_news_columns</item>
+        
+        <!-- definimos los botones -->
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/add</item>
+            </item>
+        </item>
+        
+    </argument>
+
+    <!-- configuracion del DataSource 
+    Es un componente UI que nos proporciona las datos en un formato especifico
+    Listing necesita el DataSource correctamente configurado para funcionar  -->
+    <dataSource name="ilm_news_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <!-- unique name for the grid -->
+            <argument name="class" xsi:type="string">NewsGridDataProvider</argument>
+            <!-- name of the data source same as in argument/js_config/provider -->
+            <argument name="name" xsi:type="string">ilm_news_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">news_id</argument>
+            <argument name="requestFieldName" xsi:type="string">news_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">news_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+
+  <!-- opciones sobre el control de columnas -->
+  <!--<container name="columns_controls">
+
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="columnsData" xsi:type="array">
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns</item>
+                </item>
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/columns</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+               </item>
+        </argument>
+
+    </container>-->
+   
+    <!-- opciones listing -->
+    <container name="listing_top">
+
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="template" xsi:type="string">ui/grid/toolbar</item>
+                <item name="stickyTmpl" xsi:type="string">ui/grid/sticky/toolbar</item>
+            </item>
+       </argument>
+
+        <!-- incluir un paginador a nuestra grilla -->   
+        <paging name="listing_paging"/>      
+
+        <!-- buscador en nuestra grilla -->
+        <filterSearch name="fulltext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing_data_source</item>
+                    <item name="chipsProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.listing_filters_chips</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.search</item>
+                    </item>
+                </item>
+            </argument>
+       </filterSearch>
+
+       <!-- export button -->
+       <exportButton name="export_button"/>
+       
+       <bookmark name="bookmarks" class="Ilovemarketing\News\Ui\Component\Bookmark">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/controls/bookmarks/bookmarks</item>
+                    <item name="displayArea" xsi:type="string">dataGridActions</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="*/*/save"/>
+                        <item name="deleteUrl" xsi:type="url" path="*/*/delete"/>
+                        <item name="namespace" xsi:type="string">ilm_news_listing</item>
+                    </item>
+                </item>
+            </argument>
+        </bookmark>      
+        
+        <!-- control de columnas -->
+        <columnsControls name="columns_controls"/> 
+         
+         
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
+                        <item name="namespace" xsi:type="string">current.filters</item>
+                    </item>
+                    <item name="childDefaults" xsi:type="array">
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.listing_filters</item>
+                        <item name="imports" xsi:type="array">
+                            <item name="visible" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks:current.columns.${ $.index }.visible</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </filters>   
+  
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">                    
+                    <item name="selectProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns.ids</item>
+                    <item name="displayArea" xsi:type="string">bottom</item>
+                    <item name="indexField" xsi:type="string">news_id</item>
+                </item>
+            </argument>
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">borrar</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="*/*/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Borrar todas las noticias seleccionadas</item>
+                            <item name="message" xsi:type="string" translate="true">Estás seguro que quieres borrar las noticias seleccionadas?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="edit">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">edit</item>
+                        <item name="label" xsi:type="string" translate="true">Edit</item>
+                        <item name="callback" xsi:type="array">
+                            <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns_editor</item>
+                            <item name="target" xsi:type="string">editSelected</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>            
+        </massaction>            
+                 
+   </container>  
+   
+    <!-- definimos la grilla 
+    definir el numero de columnas de la grilla 
+    el nombre de las columnas lo definimos anteriormente en el spinner -->
+    <columns name="ilm_news_columns">
+        
+        <!-- inline edit -->
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <!-- controlador que se encargara del guardado de los datos en linea -->
+                <item name="editorConfig" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns.ids</item>
+                    <item name="enabled" xsi:type="boolean">true</item>
+                    <item name="indexField" xsi:type="string">news_id</item>
+                    <item name="clientConfig" xsi:type="array">
+                        <item name="saveUrl" xsi:type="url" path="ilm/news/inlineEdit"/>
+                        <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+                <!-- esta parte se encarga de guardar los datos y permitir el campo editable -->
+                <item name="childDefaults" xsi:type="array">
+                    <!-- fieldaction nos permite hacer el elemento editable -->
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.ilm_news_columns_editor</item>
+                        <item name="target" xsi:type="string">startEdit</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                            <item name="1" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+        </argument>        
+
+        <!--<argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">               
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="controlVisibility" xsi:type="boolean">true</item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">ilm_news_listing.ilm_news_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>-->
+
+        <!-- 
+        incluye un checkbox delante de cada fila para permitir operaciones masivas tales como el borrado -->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">                    
+                    <item name="indexField" xsi:type="string">news_id</item>                             
+                </item>
+            </argument>
+        </selectionsColumn>
+
+        <!-- Columna ID -->
+        <column name="news_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+        
+        <!-- imagen -->
+        <column name="news_image" class="Ilovemarketing\News\Ui\Component\Listing\Column\Thumbnail">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="has_preview" xsi:type="string">1</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                </item>
+            </argument>
+        </column>                      
+        
+        
+        
+        <!-- conlumna news_title -->
+        <column name="news_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">news</item>
+                    <item name="dataScope" xsi:type="string">news</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <!-- inline edit -->
+                    <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">text</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>                    
+                </item>
+            </argument>
+        </column>
+        
+        <column name="news_type_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Ilovemarketing\News\Model\News\Source\NewsTypes</item>
+                <item name="config" xsi:type="array">
+                   <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                </item>
+            </argument>
+        </column>
+                
+        <column name="news_visible">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Ilovemarketing\News\Model\News\Source\NewsVisible</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                </item>
+            </argument>
+        </column>
+        
+        <!--<column name="news_visible" class="Ilovemarketing\News\Ui\Component\Listing\Column\Visible">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">                    
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" translate="true" xsi:type="string">Enable</item>
+                    <item name="dataType" xsi:type="string">select</item>                    
+                </item>
+            </argument>
+        </column>        -->
+        
+        <!-- muestra el store id a la que pertenece la noticia -->
+        <column name="store_id" class="Ilovemarketing\News\Ui\Component\Listing\Column\Store">        
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="sortable" xsi:type="boolean">true</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                </item>
+            </argument>
+        </column>           
+        
+        <!-- columna news_date -->
+        <column name="news_date" class="Ilovemarketing\News\Ui\Component\Listing\Column\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">news_date</item>
+                    <item name="dataScope" xsi:type="string">news_date</item>
+                    <item name="label" xsi:type="string" translate="true">Date</item>
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>   
+                
+        <!-- acciones 
+        add, delete, ...
+        -->
+        <actionsColumn name="actions" class="Ilovemarketing\News\Ui\Component\Listing\Column\NewsActions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">                    
+                    <item name="indexField" xsi:type="string">news_id</item>
+                    <item name="sortOrder" xsi:type="number">200</item>
+                </item>
+            </argument>
+        </actionsColumn>
+        
+        
+
+                
+    </columns> <!-- fin de la grilla -->
+    
+    
+    
+          
+
+</listing>
